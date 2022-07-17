@@ -1,6 +1,18 @@
 #include "MicroBit.h"
 
-//get coordinates of accelerometer
+//get id of accelerometer
+MicroBit uBit;
+int main() {
+  uBit.init();
+  char buf[] = {0x0D};
+  uBit.i2c.write(0x3A, buf, 1, true);
+  uBit.i2c.read(0x3A, buf, 1);
+  uBit.serial.printf("Id: %X\r\n", (int)buf[0]);
+  release_fiber();
+}
+
+/*
+//get coordinates of accelerometer using uBit.accelerometer
 MicroBit uBit;
 int main() {
   uBit.init();
@@ -11,29 +23,5 @@ int main() {
     uBit.serial.printf("%d,%d\n", xAcc, yAcc);
     uBit.sleep(100);
   }
-}
-
-/*
-#include "MicroBit.h" 
-MicroBit uBit; int main() {
- uBit.init();
- //uBit.display.scroll("Hello World");
- uBit.display.scroll("Test 2");
- release_fiber();
-}
-*/
-
-/*
-#include "MicroBit.h"
-MicroBit uBit;
-int main() {
-  uBit.init();
-  uBit.display.setDisplayMode(DISPLAY_MODE_GREYSCALE);
-  for (int i = 0; i < 5; i++) {
-    uBit.display.image.setPixelValue(2, 2, 255);
-    uBit.sleep(1000);
-    uBit.display.image.setPixelValue(2, 2, 0);
-    uBit.sleep(1000);  
-  }  
 }
 */

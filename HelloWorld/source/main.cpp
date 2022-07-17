@@ -1,5 +1,6 @@
 #include "MicroBit.h"
 
+/*
 //get id of accelerometer
 MicroBit uBit;
 int main() {
@@ -10,8 +11,8 @@ int main() {
   uBit.serial.printf("Id: %X\r\n", (int)buf[0]);
   release_fiber();
 }
+*/
 
-/*
 //get coordinates of accelerometer using uBit.accelerometer
 MicroBit uBit;
 int main() {
@@ -20,8 +21,7 @@ int main() {
     int xAcc, yAcc;
     xAcc = uBit.accelerometer.getX();
     yAcc = uBit.accelerometer.getY();
-    uBit.serial.printf("%d,%d\n", xAcc, yAcc);
+    uBit.serial.printf("%d,%d\r\n", xAcc, yAcc);
     uBit.sleep(100);
   }
 }
-*/

@@ -21,7 +21,7 @@ int main() {
     xAcc = buf2[0] << 8 | buf2[1];
     yAcc = buf2[2] << 8 | buf2[3];
     unsigned long timeNow = uBit.systemTime();
-    uBit.serial.printf("%d,%d,%d,%d\r\n", i, xAcc, yAcc, timeNow - timeStart);
+    uBit.serial.printf("%d,%d,%d,%ld\r\n", i, xAcc, yAcc, timeNow - timeStart);
     uBit.sleep(DATA_FREQ);
   }
 }

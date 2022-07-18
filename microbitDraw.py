@@ -3,22 +3,27 @@ import serial
 import time
 import matplotlib.pyplot as plt
 import re
+import sys
 
-GRAPH_PAUSE = 0.01
-DATA_FREQ = 0.02
+COM = 'COM5'
+BAUD_RATE = 115200
+TIMEOUT = 1
+SERIAL_FILE = "serialIn.txt"
+GRAPH_PAUSE = 0.001
+DATA_FREQ = 0.005
 
 class SerialIn:
     def __init__(self):
-        self.ser = serial.Serial('COM5', 115200, timeout=1)
+        self.ser = serial.Serial(COM, BAUD_RATE, timeout=TIMEOUT)
+        open(SERIAL_FILE, 'w').close()
         time.sleep(GRAPH_PAUSE)
 
-    def getNext(self):
-        while True:
-            # gets acceleration readings
-            line = self.ser.readline()
-            if line:
-                ret = re.split(",|\r\n", line.decode())
-                return [int(ret[0]), int(ret[1]), int(ret[2]), int(ret[3])]
+    def writeNext(self):
+        line = self.ser.readline()
+        if line:
+            f = open(SERIAL_FILE, "a")
+            f.write(line.decode())
+            f.close()
     
     def close(self):
         self.ser.close()
@@ -57,14 +62,43 @@ class Gui:
         self.yAccGraph.replot()
         plt.pause(GRAPH_PAUSE)
 
-si = SerialIn()
-gui = Gui()
-while True:
-    data = si.getNext()
-    print(data)
-    _, xAcc, yAcc, t = data
-    gui.addPoints((t, xAcc), (t, yAcc))
-    time.sleep(DATA_FREQ)
+def runSerial():
+    si = SerialIn()
+    while True:
+        si.writeNext()
+        time.sleep(GRAPH_PAUSE)
+
+def runDraw():
+    gui = Gui()
+    f = open(SERIAL_FILE, "r")
+    f.seek(0,2) # Go to the end of the file
+    while True:
+        line = f.readline()
+        if not line:
+            time.sleep(GRAPH_PAUSE) # Sleep briefly
+            continue
+        ret = re.split(",|\n", line)
+        _, xAcc, yAcc, t =  [int(ret[0]), int(ret[1]), int(ret[2]), int(ret[3])]
+        gui.addPoints((t, xAcc), (t, yAcc))
+        time.sleep(GRAPH_PAUSE)
+
+
+if __name__ == '__main__':
+    mode = sys.argv[1]
+    print(mode)
+    if mode == "si":
+        runSerial()
+    else:
+        runDraw()
+# si = SerialIn()
+# gui = Gui()
+# while True:
+#     data = si.getNext()
+#     ret = re.split(",|\r\n", line.decode())
+#         return [int(ret[0]), int(ret[1]), int(ret[2]), int(ret[3])]
+#     _, xAcc, yAcc, t = data
+#     gui.addPoints((t, xAcc), (t, yAcc))
+#     time.sleep(DATA_FREQ)
 
 """
 class Gui:

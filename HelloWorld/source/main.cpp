@@ -6,12 +6,10 @@
 #define DATA_FREQ 10
 
 /*
-//get x and y accelerations - DIRECT (V1)
+//get x and y accelerations - DIRECT
 MicroBit uBit;
 int main() {
   uBit.init();
-  uBit.display.setDisplayMode(DISPLAY_MODE_GREYSCALE);
-  uBit.display.image.setPixelValue(0, 0, 10);
   unsigned long timeStart = uBit.systemTime();
   char buf[] = {ACC_REG};
   char buf2[ACC_BYTE_SIZE+1];
@@ -30,32 +28,15 @@ int main() {
 }
 */
 
+
+//get x and y accelerations - INDIRECT
 MicroBit uBit;
-
-void lightStopMode(void) {
-  uBit.display.image.setPixelValue(0, 0, 10);
-  uBit.display.image.setPixelValue(1, 0, 0);
-}
-
-void lightDrawMode(void) {
-  uBit.display.image.setPixelValue(0, 0, 0);
-  uBit.display.image.setPixelValue(1, 0, 10);
-}
-
 int main() {
   uBit.init();
-  uBit.display.setDisplayMode(DISPLAY_MODE_GREYSCALE);
-  lightStopMode();
-  unsigned long timeStart;
+  unsigned long timeStart = uBit.systemTime();
   int16_t xAcc;
   int16_t yAcc;
-  while (!uBit.buttonB.isPressed()) {
-    uBit.sleep(DATA_FREQ);
-  }
-  uBit.sleep(1500);
-  lightDrawMode();
-  timeStart = uBit.systemTime();
-  for (int i=0; !uBit.buttonB.isPressed(); i++) {
+  for (int i=0;;i++) {
     xAcc = uBit.accelerometer.getX();
     yAcc = uBit.accelerometer.getY();
     unsigned long timeNow = uBit.systemTime();
@@ -63,16 +44,3 @@ int main() {
     uBit.sleep(DATA_FREQ);
   }
 }
-
-/*
-//get id of accelerometer
-MicroBit uBit;
-int main() {
-  uBit.init();
-  char buf[] = {0x0D};
-  uBit.i2c.write(0x3A, buf, 1, true);
-  uBit.i2c.read(0x3A, buf, 1);
-  uBit.serial.printf("Id: %X\r\n", (int)buf[0]);
-  release_fiber();
-}
-*/

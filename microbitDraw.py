@@ -2,13 +2,12 @@
 import serial
 import time
 import matplotlib.pyplot as plt
-import re
 
 COM = 'COM5'
 BAUD_RATE = 115200
 TIMEOUT = 1
 GRAPH_PAUSE = 0.001
-DATA_FREQ = 0.01
+DATA_FREQ = 1000
 MAX_ITERATIONS = 1000
 
 class Serial:
@@ -39,23 +38,26 @@ class Graph:
 
 class Gui:
     def __init__(self):
-        _, axis = plt.subplots(2, 1)
+        _, axis = plt.subplots(3, 1)
         self.xAccGraph = Graph(axis[0], "X acceleration", "time", "x acceleration")
         self.yAccGraph = Graph(axis[1], "Y acceleration", "time", "y acceleration")
+        self.zAccGraph = Graph(axis[2], "Z acceleration", "time", "z acceleration")
         plt.tight_layout()
         self.refreshDrawing()
     
-    def addPoints(self, xAccPoint, yAccPoint):
+    def addPoints(self, xAccPoint, yAccPoint, zAccPoint):
         self.xAccGraph.addPoint(xAccPoint[0], xAccPoint[1])
         self.yAccGraph.addPoint(yAccPoint[0], yAccPoint[1])
+        self.zAccGraph.addPoint(zAccPoint[0], zAccPoint[1])
         self.refreshDrawing()
 
     def refreshDrawing(self):
         self.xAccGraph.replot()
         self.yAccGraph.replot()
+        self.zAccGraph.replot()
         plt.pause(GRAPH_PAUSE)
 
-print("Prog started")
+print("Graphing started")
 s = Serial()
 gui = Gui()
 for i in range(MAX_ITERATIONS):
@@ -66,9 +68,9 @@ for i in range(MAX_ITERATIONS):
     if not line:
         time.sleep(GRAPH_PAUSE) # Sleep briefly
         continue
-    ret = re.split(",|\n", line)
+    ret = line.strip().split(",")
     print(ret)
-    _, xAcc, yAcc, t =  [int(ret[0]), int(ret[1]), int(ret[2]), int(ret[3])]
-    gui.addPoints((t, xAcc), (t, yAcc))
+    _, xAcc, yAcc, zAcc, t =  [int(ret[0]), int(ret[1]), int(ret[2]), int(ret[3]), int(ret[4])]
+    gui.addPoints((t, xAcc), (t, yAcc), (t, zAcc))
     time.sleep(GRAPH_PAUSE)
 s.close()

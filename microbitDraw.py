@@ -66,6 +66,6 @@ for i in range(MAX_ITERATIONS):
     ret = line.strip().split(",")
     #print(ret)
     x, y =  [int(ret[0]), int(ret[1])]
-    gui.addPoints((x, -y))
+    gui.addPoints((x, y))
     time.sleep(GRAPH_PAUSE)
 s.close()

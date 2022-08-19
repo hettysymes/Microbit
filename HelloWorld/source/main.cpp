@@ -12,24 +12,25 @@
 #define AXIS_LIM 600
 MicroBit uBit;
 
-int readReg(char regAddr) {
-  return uBit.i2c.readRegister(I2C_ADDR, regAddr);
-}
+// int main() {
+//   uBit.init();
+//   for (int i=0;;i++) {
+//     uBit.serial.printf("%d,%d\n\r", uBit.accelerometer.getX(), uBit.accelerometer.getY());
+//     uBit.sleep(DATA_FREQ);
+//   }
+// }
 
-char setByte(char regAddr, char value) {
-}
-
-void getAllAccs(int *accs) {
-  accs[0] = readReg(XACC_MSB_REG);
-  accs[1] = readReg(YACC_MSB_REG);
-  accs[2] = readReg(ZACC_MSB_REG);
-  return;
+int readReg(uint8_t reg) {
+    uint8_t buf;
+    uBit.i2c.write(I2C_ADDR, (const char *)&reg, 1, true);
+    uBit.i2c.read(I2C_ADDR, (char *)&buf, 1);
+    return buf;
 }
 
 int main() {
   uBit.init();
   for (int i=0;;i++) {
-    uBit.serial.printf("%d,%d\n\r", uBit.accelerometer.getX(), uBit.accelerometer.getY());
+    uBit.serial.printf("%d,%d\n\r", readReg(XACC_MSB_REG), readReg(YACC_MSB_REG));
     uBit.sleep(DATA_FREQ);
   }
 }
@@ -37,13 +38,15 @@ int main() {
 // int main() {
 //   uBit.init();
 //   for (int i=0;;i++) {
-//     if (uBit.accelerometer.getX() > AXIS_LIM) {
+//     int x = uBit.i2c.readRegister(I2C_ADDR, XACC_MSB_REG);
+//     int y = uBit.i2c.readRegister(I2C_ADDR, YACC_MSB_REG);
+//     if (x > AXIS_LIM) {
 //       uBit.serial.printf("%c\n\r", 'R');
-//     } else if (uBit.accelerometer.getX() < -AXIS_LIM) {
+//     } else if (x < -AXIS_LIM) {
 //       uBit.serial.printf("%c\n\r", 'L');
-//     } else if (uBit.accelerometer.getY() > AXIS_LIM) {
+//     } else if (y > AXIS_LIM) {
 //       uBit.serial.printf("%c\n\r", 'D');
-//     } else if (uBit.accelerometer.getY() < -AXIS_LIM) {
+//     } else if (y < -AXIS_LIM) {
 //       uBit.serial.printf("%c\n\r", 'U');
 //     } else {
 //       uBit.serial.printf("%c\n\r", 'S');

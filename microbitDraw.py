@@ -7,7 +7,7 @@ COM = 'COM5'
 BAUD_RATE = 115200
 TIMEOUT = 1
 GRAPH_PAUSE = 0.001
-DATA_FREQ = 1000
+DATA_FREQ = 5
 MAX_ITERATIONS = 1000
 
 class Serial:
@@ -26,6 +26,7 @@ class Graph:
         self.graph.set_title(title)
         self.graph.set_xlabel(xLabel)
         self.graph.set_ylabel(yLabel)
+        #self.graph.set_ylim([-100, 300])
         self.xs = []
         self.ys = []
     
@@ -38,23 +39,17 @@ class Graph:
 
 class Gui:
     def __init__(self):
-        _, axis = plt.subplots(3, 1)
-        self.xAccGraph = Graph(axis[0], "X acceleration", "time", "x acceleration")
-        self.yAccGraph = Graph(axis[1], "Y acceleration", "time", "y acceleration")
-        self.zAccGraph = Graph(axis[2], "Z acceleration", "time", "z acceleration")
+        _, axis = plt.subplots(1, 1)
+        self.graph = Graph(axis, "Plot", "x-axis", "y-axis")
         plt.tight_layout()
         self.refreshDrawing()
     
-    def addPoints(self, xAccPoint, yAccPoint, zAccPoint):
-        self.xAccGraph.addPoint(xAccPoint[0], xAccPoint[1])
-        self.yAccGraph.addPoint(yAccPoint[0], yAccPoint[1])
-        self.zAccGraph.addPoint(zAccPoint[0], zAccPoint[1])
+    def addPoints(self, point):
+        self.graph.addPoint(point[0], point[1])
         self.refreshDrawing()
 
     def refreshDrawing(self):
-        self.xAccGraph.replot()
-        self.yAccGraph.replot()
-        self.zAccGraph.replot()
+        self.graph.replot()
         plt.pause(GRAPH_PAUSE)
 
 print("Graphing started")
@@ -69,8 +64,8 @@ for i in range(MAX_ITERATIONS):
         time.sleep(GRAPH_PAUSE) # Sleep briefly
         continue
     ret = line.strip().split(",")
-    print(ret)
-    _, xAcc, yAcc, zAcc, t =  [int(ret[0]), int(ret[1]), int(ret[2]), int(ret[3]), int(ret[4])]
-    gui.addPoints((t, xAcc), (t, yAcc), (t, zAcc))
+    #print(ret)
+    x, y =  [int(ret[0]), int(ret[1])]
+    gui.addPoints((x, -y))
     time.sleep(GRAPH_PAUSE)
 s.close()

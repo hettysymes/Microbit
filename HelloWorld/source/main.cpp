@@ -22,10 +22,10 @@ int byteToInt(char byte) {
 }
 
 int readReg(uint8_t reg) {
-    uint8_t buf;
-    uBit.i2c.write(I2C_ADDR, (const char *)&reg, 1, true);
-    uBit.i2c.read(I2C_ADDR, (char *)&buf, 1);
-    return byteToInt((char) buf);
+  uint8_t buf;
+  uBit.i2c.write(I2C_ADDR, (const char *)&reg, 1, true);
+  uBit.i2c.read(I2C_ADDR, (char *)&buf, 1);
+  return byteToInt((char) buf);
 }
 
 int main() {

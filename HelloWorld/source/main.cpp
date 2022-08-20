@@ -20,11 +20,20 @@ MicroBit uBit;
 //   }
 // }
 
+int byteToInt(char byte) {
+  if ((byte & 0x80) == 0){
+    return byte;
+  }
+  else {
+    return (char)(~(byte - 0x01)) * -1;
+  }     
+}
+
 int readReg(uint8_t reg) {
     uint8_t buf;
     uBit.i2c.write(I2C_ADDR, (const char *)&reg, 1, true);
     uBit.i2c.read(I2C_ADDR, (char *)&buf, 1);
-    return buf;
+    return byteToInt((char) buf);
 }
 
 int main() {

@@ -31,6 +31,7 @@ int readReg(uint8_t reg) {
 int main() {
   uBit.init();
   for (int i=0;;i++) {
+    if (uBit.buttonB.isPressed()) continue;
     uBit.serial.printf("%d,%d\n\r", readReg(XACC_MSB_REG), readReg(YACC_MSB_REG));
     uBit.sleep(DATA_FREQ);
   }

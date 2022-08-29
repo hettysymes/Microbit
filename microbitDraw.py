@@ -10,7 +10,7 @@ import sys
 COM = 'COM5'
 BAUD_RATE = 115200
 TIMEOUT = 1
-DATA_FREQ = 0.001
+DATA_FREQ = 25
 
 class SerialConn:
 

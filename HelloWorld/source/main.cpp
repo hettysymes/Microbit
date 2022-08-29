@@ -8,7 +8,7 @@
 #define YACC_MSB_REG 0x03
 #define ZACC_MSB_REG 0x05
 #define ACC_DIM 3
-#define DATA_FREQ 500
+#define DATA_FREQ 50
 #define AXIS_LIM 600
 MicroBit uBit;
 

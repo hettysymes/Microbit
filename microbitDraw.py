@@ -1,21 +1,16 @@
 #microbitDraw
 import serial
-import time
-import matplotlib.pyplot as plt
 
-from PyQt5 import QtWidgets, QtCore
-from pyqtgraph import PlotWidget, plot
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import *
 import pyqtgraph as pg
-import sys  # We need sys so that we can pass argv to QApplication
-import os
-from random import randint
+from PyQt5.QtGui import *
+import sys
 
 COM = 'COM5'
 BAUD_RATE = 115200
 TIMEOUT = 1
-GRAPH_PAUSE = 0.001
-DATA_FREQ = 5
-MAX_ITERATIONS = 1000
+DATA_FREQ = 0.001
 
 class SerialConn:
 
@@ -40,61 +35,49 @@ class SerialConn:
     def close(self):
         self.ser.close()
 
-class MainWindow(QtWidgets.QMainWindow):
+class MainWindow(QMainWindow):
 
     def __init__(self, *args, **kwargs):
-        super(MainWindow, self).__init__(*args, **kwargs)
+        super().__init__()
 
+        self.setWindowTitle("PyQtGraph")
+        self.setGeometry(100, 100, 600, 500)
         self.serial = SerialConn()
+        self.xs = []
+        self.ys = []
+        self.UiComponents()
 
-        self.graphWidget = pg.PlotWidget()
-        self.setCentralWidget(self.graphWidget)
-
-        self.x = []
-        self.y = []
-
-        self.graphWidget.setBackground('w')
-
-        pen = pg.mkPen(color=(255, 0, 0))
-        self.data_line = self.graphWidget.plot(self.x, self.y, pen=pen)
+    def UiComponents(self):
+        widget = QWidget()
+        label = QLabel("Drawing console")
+        label.setWordWrap(True)
+        plot = pg.plot()
+        self.scatter = pg.ScatterPlotItem(size=10, brush=pg.mkBrush(30, 255, 35, 255))
+        plot.addItem(self.scatter)
+        layout = QGridLayout()
+        label.setMinimumWidth(130)
+        widget.setLayout(layout)
+        layout.addWidget(label, 1, 0)
+        layout.addWidget(plot, 0, 1, 3, 1)
+        self.setCentralWidget(widget)
+        self.updateScatter()
 
         self.timer = QtCore.QTimer()
-        self.timer.setInterval(GRAPH_PAUSE)
+        self.timer.setInterval(DATA_FREQ)
         self.timer.timeout.connect(self.update_plot_data)
         self.timer.start()
+
+    def updateScatter(self):
+        self.scatter.setData(self.xs, self.ys)
 
     def update_plot_data(self):
         (success, data) = self.serial.readData()
         if success:
-            self.x.append(data[0])
-            self.y.append(data[1])
-        self.data_line.setData(self.x, self.y)  # Update the data.
+            self.xs.append(data[0])
+            self.ys.append(data[1])
+        self.updateScatter()
 
-app = QtWidgets.QApplication(sys.argv)
+app = QApplication(sys.argv)
 w = MainWindow()
 w.show()
 sys.exit(app.exec_())
-
-
-
-
-# print("Graphing started")
-# s = Serial()
-# gui = Gui()
-# for i in range(MAX_ITERATIONS):
-#     try:
-#         line = s.readline()
-#     except:
-#         continue
-#     if not line:
-#         time.sleep(GRAPH_PAUSE) # Sleep briefly
-#         continue
-#     ret = line.strip().split(",")
-#     try:
-#         x, y =  [int(ret[0]), int(ret[1])]
-#     except:
-#         time.sleep(GRAPH_PAUSE)
-#         continue
-#     gui.addPoint((-x, y))
-#     time.sleep(GRAPH_PAUSE)
-# s.close()

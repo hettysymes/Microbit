@@ -54,6 +54,7 @@ class MainWindow(QMainWindow):
         plot = pg.plot()
         self.scatter = pg.ScatterPlotItem(size=10, brush=pg.mkBrush(30, 255, 35, 255))
         plot.addItem(self.scatter)
+        plot.setRange(xRange=[-70, 70], yRange=[-70, 70])
         layout = QGridLayout()
         label.setMinimumWidth(130)
         widget.setLayout(layout)

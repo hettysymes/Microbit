@@ -27,10 +27,10 @@ class SerialConn:
             return FAILURE
         ret = line.strip().split(",")
         try:
-            x, y =  [int(ret[0]), int(ret[1])]
+            x, y, penDown =  [int(ret[0]), int(ret[1]), int(ret[2])]
         except:
             return FAILURE
-        return (True, (-x, y))
+        return (True, (-x, y, penDown))
     
     def close(self):
         self.ser.close()
@@ -72,10 +72,10 @@ class MainWindow(QMainWindow):
         self.scatter.setData(self.xs, self.ys)
 
     def update_plot_data(self):
-        (success, data) = self.serial.readData()
-        if success:
-            self.xs.append(data[0])
-            self.ys.append(data[1])
+        (success, (x, y, penDown)) = self.serial.readData()
+        if success and penDown:
+            self.xs.append(x)
+            self.ys.append(y)
         self.updateScatter()
 
 app = QApplication(sys.argv)

@@ -27,10 +27,10 @@ class SerialConn:
             return FAILURE
         ret = line.strip().split(",")
         try:
-            x, y, penDown =  [int(ret[0]), int(ret[1]), int(ret[2])]
+            x, y, penDown, clear =  [int(ret[0]), int(ret[1]), int(ret[2]), int(ret[3])]
         except:
             return FAILURE
-        return (True, (-x, y, penDown))
+        return (True, (-x, y, penDown, clear))
     
     def close(self):
         self.ser.close()
@@ -43,7 +43,7 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("PyQtGraph")
         self.setGeometry(100, 100, 600, 500)
         self.normalPen = pg.mkBrush(30, 255, 30, 255)
-        self.cursorPen = pg.mkBrush(255, 30, 30)
+        self.cursorPen = pg.mkBrush(255, 30, 30, 255)
         self.serial = SerialConn()
         self.data = []
         self.UiComponents()
@@ -73,13 +73,16 @@ class MainWindow(QMainWindow):
         self.scatter.setData(self.data)
 
     def update_plot_data(self):
-        (success, (x, y, penDown)) = self.serial.readData()
-        if success:
+        (success, (x, y, penDown, clear)) = self.serial.readData()
+        if not success: return
+        if clear:
+            self.data = []
+        elif self.data:
             if penDown:
-                if self.data: self.data[-1]['brush'] = self.normalPen
+                self.data[-1]['brush'] = self.normalPen
             else:
-                if self.data: self.data.pop()
-            self.data.append({'pos': (x, y), 'brush': self.cursorPen})
+                self.data.pop()
+        self.data.append({'pos': (x, y), 'brush': self.cursorPen})
         self.updateScatter()
 
 app = QApplication(sys.argv)

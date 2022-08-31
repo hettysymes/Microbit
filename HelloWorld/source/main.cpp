@@ -10,7 +10,9 @@
 #define ACC_DIM 3
 #define DATA_FREQ 50
 #define AXIS_LIM 600
+#define LIGHT_BRIGHTNESS 10
 MicroBit uBit;
+bool buttonClicked = false;
 
 int byteToInt(char byte) {
   if ((byte & 0x80) == 0){
@@ -28,11 +30,30 @@ int readReg(uint8_t reg) {
   return byteToInt((char) buf);
 }
 
+void updateDisplayLight() {
+  if (buttonClicked) {
+    uBit.display.image.setPixelValue(2, 2, LIGHT_BRIGHTNESS);
+  } else {
+    uBit.display.image.setPixelValue(2, 2, 0);
+  }
+}
+
+void buttonClickEvent(MicroBitEvent e) {
+  buttonClicked = !buttonClicked;
+  updateDisplayLight();
+}
+
+void setUpButton() {
+  uBit.buttonB.setEventConfiguration(MICROBIT_BUTTON_ALL_EVENTS);
+  uBit.messageBus.listen(MICROBIT_ID_BUTTON_B, MICROBIT_BUTTON_EVT_CLICK, buttonClickEvent);
+}
+
 int main() {
   uBit.init();
+  uBit.display.setDisplayMode(DISPLAY_MODE_GREYSCALE);
+  setUpButton();
   for (int i=0;;i++) {
-    if (uBit.buttonB.isPressed()) continue;
-    uBit.serial.printf("%d,%d\n\r", readReg(XACC_MSB_REG), readReg(YACC_MSB_REG));
+    uBit.serial.printf("%d,%d,%d\n\r", readReg(XACC_MSB_REG), readReg(YACC_MSB_REG), buttonClicked);
     uBit.sleep(DATA_FREQ);
   }
 }

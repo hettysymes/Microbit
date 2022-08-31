@@ -42,9 +42,10 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle("PyQtGraph")
         self.setGeometry(100, 100, 600, 500)
+        self.normalPen = pg.mkBrush(30, 255, 30, 255)
+        self.cursorPen = pg.mkBrush(255, 30, 30)
         self.serial = SerialConn()
-        self.xs = []
-        self.ys = []
+        self.data = []
         self.UiComponents()
 
     def UiComponents(self):
@@ -52,7 +53,7 @@ class MainWindow(QMainWindow):
         label = QLabel("Drawing console")
         label.setWordWrap(True)
         plot = pg.plot()
-        self.scatter = pg.ScatterPlotItem(size=10, brush=pg.mkBrush(30, 255, 35, 255))
+        self.scatter = pg.ScatterPlotItem(size=10, brush=self.normalPen)
         plot.addItem(self.scatter)
         plot.setRange(xRange=[-70, 70], yRange=[-70, 70])
         layout = QGridLayout()
@@ -69,13 +70,16 @@ class MainWindow(QMainWindow):
         self.timer.start()
 
     def updateScatter(self):
-        self.scatter.setData(self.xs, self.ys)
+        self.scatter.setData(self.data)
 
     def update_plot_data(self):
         (success, (x, y, penDown)) = self.serial.readData()
-        if success and penDown:
-            self.xs.append(x)
-            self.ys.append(y)
+        if success:
+            if penDown:
+                if self.data: self.data[-1]['brush'] = self.normalPen
+            else:
+                if self.data: self.data.pop()
+            self.data.append({'pos': (x, y), 'brush': self.cursorPen})
         self.updateScatter()
 
 app = QApplication(sys.argv)

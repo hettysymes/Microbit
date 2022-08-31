@@ -12,7 +12,8 @@
 #define AXIS_LIM 600
 #define LIGHT_BRIGHTNESS 10
 MicroBit uBit;
-bool buttonClicked = false;
+bool buttonBclicked = false;
+bool buttonAclicked = false;
 
 int byteToInt(char byte) {
   if ((byte & 0x80) == 0){
@@ -31,29 +32,36 @@ int readReg(uint8_t reg) {
 }
 
 void updateDisplayLight() {
-  if (buttonClicked) {
+  if (buttonBclicked) {
     uBit.display.image.setPixelValue(2, 2, LIGHT_BRIGHTNESS);
   } else {
     uBit.display.image.setPixelValue(2, 2, 0);
   }
 }
 
-void buttonClickEvent(MicroBitEvent e) {
-  buttonClicked = !buttonClicked;
+void buttonBClickEvent(MicroBitEvent e) {
+  buttonBclicked = !buttonBclicked;
   updateDisplayLight();
 }
 
-void setUpButton() {
+void buttonAClickEvent(MicroBitEvent e) {
+  buttonAclicked = true;
+}
+
+void setUpButtons() {
   uBit.buttonB.setEventConfiguration(MICROBIT_BUTTON_ALL_EVENTS);
-  uBit.messageBus.listen(MICROBIT_ID_BUTTON_B, MICROBIT_BUTTON_EVT_CLICK, buttonClickEvent);
+  uBit.messageBus.listen(MICROBIT_ID_BUTTON_B, MICROBIT_BUTTON_EVT_CLICK, buttonBClickEvent);
+  uBit.buttonA.setEventConfiguration(MICROBIT_BUTTON_ALL_EVENTS);
+  uBit.messageBus.listen(MICROBIT_ID_BUTTON_A, MICROBIT_BUTTON_EVT_CLICK, buttonAClickEvent);
 }
 
 int main() {
   uBit.init();
   uBit.display.setDisplayMode(DISPLAY_MODE_GREYSCALE);
-  setUpButton();
+  setUpButtons();
   for (int i=0;;i++) {
-    uBit.serial.printf("%d,%d,%d\n\r", readReg(XACC_MSB_REG), readReg(YACC_MSB_REG), buttonClicked);
+    uBit.serial.printf("%d,%d,%d,%d\n\r", readReg(XACC_MSB_REG), readReg(YACC_MSB_REG), buttonBclicked, buttonAclicked);
+    if (buttonAclicked) buttonAclicked = false;
     uBit.sleep(DATA_FREQ);
   }
 }

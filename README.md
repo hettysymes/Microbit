@@ -1,2 +1,2 @@
-# MicroBitV1
- Template for MicroBit V1 C/C++ Projects
+# MicroBit Drawing project
+ Uses the MicroBit accelerometer information to draw images, with button A used to clear the canvas and button B used to switch between 'pen up' and 'pen down' modes. The information from the microbit is sent across via a serial connection, and to start drawing run the microbitDraw.py program. The initial template used for this MicroBit V1 C/C++ project was taken from the book "Micro:Bit Iot in C" by Harry Fairhead.

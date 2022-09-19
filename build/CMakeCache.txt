@@ -114,7 +114,7 @@ CMAKE_C_FLAGS_RELWITHDEBINFO:STRING=-Os -g -gdwarf-3 -DNDEBUG
 CMAKE_DLLTOOL:FILEPATH=CMAKE_DLLTOOL-NOTFOUND
 
 //Flags used by the linker during all build types.
-CMAKE_EXE_LINKER_FLAGS:STRING=-fno-exceptions -fno-unwind-tables -Wl,--gc-sections -Wl,--sort-common -Wl,--sort-section=alignment -Wl,-wrap,main -mcpu=cortex-m0 -mthumb -T"/home/hettysymes/Microbit/HelloWorld/yotta_targets/bbc-microbit-classic-gcc/CMake/../ld/NRF51822.ld"
+CMAKE_EXE_LINKER_FLAGS:STRING=-fno-exceptions -fno-unwind-tables -Wl,--gc-sections -Wl,--sort-common -Wl,--sort-section=alignment -Wl,-wrap,main -mcpu=cortex-m0 -mthumb -T"/home/hettysymes/Microbit/MicrobitDraw/yotta_targets/bbc-microbit-classic-gcc/CMake/../ld/NRF51822.ld"
 
 //Flags used by the linker during DEBUG builds.
 CMAKE_EXE_LINKER_FLAGS_DEBUG:STRING=
@@ -176,7 +176,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=HelloWorld
+CMAKE_PROJECT_NAME:STATIC=MicrobitDraw
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=/usr/bin/arm-none-eabi-ranlib
@@ -235,7 +235,7 @@ CMAKE_STATIC_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 CMAKE_STRIP:FILEPATH=/usr/bin/arm-none-eabi-strip
 
 //The CMake toolchain file
-CMAKE_TOOLCHAIN_FILE:FILEPATH=/home/hettysymes/Microbit/HelloWorld/build/bbc-microbit-classic-gcc/toolchain.cmake
+CMAKE_TOOLCHAIN_FILE:FILEPATH=/home/hettysymes/Microbit/MicrobitDraw/build/bbc-microbit-classic-gcc/toolchain.cmake
 
 //If this value is on, makefiles will be generated without the
 // .SILENT directive, and all commands will be echoed to the console
@@ -244,10 +244,10 @@ CMAKE_TOOLCHAIN_FILE:FILEPATH=/home/hettysymes/Microbit/HelloWorld/build/bbc-mic
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Value Computed by CMake
-HelloWorld_BINARY_DIR:STATIC=/home/hettysymes/Microbit/build
+MicrobitDraw_BINARY_DIR:STATIC=/home/hettysymes/Microbit/build
 
 //Value Computed by CMake
-HelloWorld_SOURCE_DIR:STATIC=/home/hettysymes/Microbit/HelloWorld/build/bbc-microbit-classic-gcc
+MicrobitDraw_SOURCE_DIR:STATIC=/home/hettysymes/Microbit/MicrobitDraw/build/bbc-microbit-classic-gcc
 
 //Value Computed by CMake
 ble-nrf51822_BINARY_DIR:STATIC=/home/hettysymes/Microbit/build/ym/ble-nrf51822
@@ -256,7 +256,7 @@ ble-nrf51822_BINARY_DIR:STATIC=/home/hettysymes/Microbit/build/ym/ble-nrf51822
 ble-nrf51822_LIB_DEPENDS:STATIC=general;ble;general;nrf51-sdk;
 
 //Value Computed by CMake
-ble-nrf51822_SOURCE_DIR:STATIC=/home/hettysymes/Microbit/HelloWorld/build/bbc-microbit-classic-gcc/ym/ble-nrf51822
+ble-nrf51822_SOURCE_DIR:STATIC=/home/hettysymes/Microbit/MicrobitDraw/build/bbc-microbit-classic-gcc/ym/ble-nrf51822
 
 //Value Computed by CMake
 ble_BINARY_DIR:STATIC=/home/hettysymes/Microbit/build/ym/ble
@@ -265,16 +265,16 @@ ble_BINARY_DIR:STATIC=/home/hettysymes/Microbit/build/ym/ble
 ble_LIB_DEPENDS:STATIC=general;ble-nrf51822;general;mbed-classic;
 
 //Value Computed by CMake
-ble_SOURCE_DIR:STATIC=/home/hettysymes/Microbit/HelloWorld/build/bbc-microbit-classic-gcc/ym/ble
+ble_SOURCE_DIR:STATIC=/home/hettysymes/Microbit/MicrobitDraw/build/bbc-microbit-classic-gcc/ym/ble
 
 //Value Computed by CMake
-mbed-classic_BINARY_DIR:STATIC=/home/hettysymes/Microbit/HelloWorld/build/bbc-microbit-classic-gcc/ym/mbed-classic/existing
+mbed-classic_BINARY_DIR:STATIC=/home/hettysymes/Microbit/MicrobitDraw/build/bbc-microbit-classic-gcc/ym/mbed-classic/existing
 
 //Dependencies for the target
 mbed-classic_LIB_DEPENDS:STATIC=general;-lnosys;
 
 //Value Computed by CMake
-mbed-classic_SOURCE_DIR:STATIC=/home/hettysymes/Microbit/HelloWorld/yotta_modules/mbed-classic
+mbed-classic_SOURCE_DIR:STATIC=/home/hettysymes/Microbit/MicrobitDraw/yotta_modules/mbed-classic
 
 //Value Computed by CMake
 microbit-dal_BINARY_DIR:STATIC=/home/hettysymes/Microbit/build/ym/microbit-dal
@@ -283,7 +283,7 @@ microbit-dal_BINARY_DIR:STATIC=/home/hettysymes/Microbit/build/ym/microbit-dal
 microbit-dal_LIB_DEPENDS:STATIC=general;mbed-classic;general;ble;general;ble-nrf51822;
 
 //Value Computed by CMake
-microbit-dal_SOURCE_DIR:STATIC=/home/hettysymes/Microbit/HelloWorld/build/bbc-microbit-classic-gcc/ym/microbit-dal
+microbit-dal_SOURCE_DIR:STATIC=/home/hettysymes/Microbit/MicrobitDraw/build/bbc-microbit-classic-gcc/ym/microbit-dal
 
 //Value Computed by CMake
 microbit_BINARY_DIR:STATIC=/home/hettysymes/Microbit/build/ym/microbit
@@ -292,7 +292,7 @@ microbit_BINARY_DIR:STATIC=/home/hettysymes/Microbit/build/ym/microbit
 microbit_LIB_DEPENDS:STATIC=general;microbit-dal;
 
 //Value Computed by CMake
-microbit_SOURCE_DIR:STATIC=/home/hettysymes/Microbit/HelloWorld/build/bbc-microbit-classic-gcc/ym/microbit
+microbit_SOURCE_DIR:STATIC=/home/hettysymes/Microbit/MicrobitDraw/build/bbc-microbit-classic-gcc/ym/microbit
 
 //Value Computed by CMake
 nrf51-sdk_BINARY_DIR:STATIC=/home/hettysymes/Microbit/build/ym/nrf51-sdk
@@ -301,7 +301,7 @@ nrf51-sdk_BINARY_DIR:STATIC=/home/hettysymes/Microbit/build/ym/nrf51-sdk
 nrf51-sdk_LIB_DEPENDS:STATIC=general;mbed-classic;
 
 //Value Computed by CMake
-nrf51-sdk_SOURCE_DIR:STATIC=/home/hettysymes/Microbit/HelloWorld/build/bbc-microbit-classic-gcc/ym/nrf51-sdk
+nrf51-sdk_SOURCE_DIR:STATIC=/home/hettysymes/Microbit/MicrobitDraw/build/bbc-microbit-classic-gcc/ym/nrf51-sdk
 
 
 ########################
@@ -401,7 +401,7 @@ CMAKE_GENERATOR_PLATFORM:INTERNAL=
 CMAKE_GENERATOR_TOOLSET:INTERNAL=
 //Source directory with the top level CMakeLists.txt file for this
 // project
-CMAKE_HOME_DIRECTORY:INTERNAL=/home/hettysymes/Microbit/HelloWorld/build/bbc-microbit-classic-gcc
+CMAKE_HOME_DIRECTORY:INTERNAL=/home/hettysymes/Microbit/MicrobitDraw/build/bbc-microbit-classic-gcc
 //ADVANCED property for variable: CMAKE_LINKER
 CMAKE_LINKER-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_MAKE_PROGRAM

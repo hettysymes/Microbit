@@ -1,3 +1,3 @@
 {
-  "cmake.sourceDirectory": "${workspaceFolder}/HelloWorld/build/bbc-microbit-classic-gcc"
+  "cmake.sourceDirectory": "${workspaceFolder}/MicrobitDraw/build/bbc-microbit-classic-gcc"
 }

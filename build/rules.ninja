@@ -6,7 +6,7 @@
 # It is included in the main 'build.ninja'.
 
 # =============================================================================
-# Project: HelloWorld
+# Project: MicrobitDraw
 # Configuration: Release
 # =============================================================================
 # =============================================================================
@@ -176,7 +176,7 @@ rule CXX_STATIC_LIBRARY_LINKER__microbit
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__HelloWorld
+rule CXX_COMPILER__MicrobitDraw
   depfile = $DEP_FILE
   deps = gcc
   command = /usr/bin/arm-none-eabi-g++ $DEFINES $INCLUDES $FLAGS -MMD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -186,7 +186,7 @@ rule CXX_COMPILER__HelloWorld
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__HelloWorld
+rule CXX_EXECUTABLE_LINKER__MicrobitDraw
   command = $PRE_LINK && /usr/bin/arm-none-eabi-g++  $LINK_FLAGS -Wl,-Map,$TARGET_FILE.map -Wl,--start-group $in $LINK_PATH $LINK_LIBRARIES  -lstdc++ -lsupc++ -lm -lc -lgcc -lstdc++ -lsupc++ -lm -lc -lgcc -Wl,--end-group  --specs=nano.specs -o $TARGET_FILE && $POST_BUILD
   description = Linking CXX executable $TARGET_FILE
   restat = $RESTAT
@@ -196,7 +196,7 @@ rule CXX_EXECUTABLE_LINKER__HelloWorld
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /usr/bin/cmake -S/home/hettysymes/Microbit/HelloWorld/build/bbc-microbit-classic-gcc -B/home/hettysymes/Microbit/build
+  command = /usr/bin/cmake -S/home/hettysymes/Microbit/MicrobitDraw/build/bbc-microbit-classic-gcc -B/home/hettysymes/Microbit/build
   description = Re-running CMake...
   generator = 1
 

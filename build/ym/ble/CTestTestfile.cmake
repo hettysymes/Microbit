@@ -1,5 +1,5 @@
 # CMake generated Testfile for 
-# Source directory: /home/hettysymes/Microbit/HelloWorld/build/bbc-microbit-classic-gcc/ym/ble
+# Source directory: /home/hettysymes/Microbit/MicrobitDraw/build/bbc-microbit-classic-gcc/ym/ble
 # Build directory: /home/hettysymes/Microbit/build/ym/ble
 # 
 # This file includes the relevant testing commands required for 

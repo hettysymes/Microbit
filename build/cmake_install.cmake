@@ -1,4 +1,4 @@
-# Install script for directory: /home/hettysymes/Microbit/HelloWorld/build/bbc-microbit-classic-gcc
+# Install script for directory: /home/hettysymes/Microbit/MicrobitDraw/build/bbc-microbit-classic-gcc
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

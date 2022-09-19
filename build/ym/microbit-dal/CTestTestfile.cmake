@@ -1,5 +1,5 @@
 # CMake generated Testfile for 
-# Source directory: /home/hettysymes/Microbit/HelloWorld/build/bbc-microbit-classic-gcc/ym/microbit-dal
+# Source directory: /home/hettysymes/Microbit/MicrobitDraw/build/bbc-microbit-classic-gcc/ym/microbit-dal
 # Build directory: /home/hettysymes/Microbit/build/ym/microbit-dal
 # 
 # This file includes the relevant testing commands required for 
